@@ -22,7 +22,7 @@ const Home: NextPage = () => {
     }
   };
 
-  const patternStyles = () => {
+  function patternStyles() {
     const defaultPattern =
       "z-5 absolute h-full w-full pattern-gray-400 dark:pattern-gray-600 pattern-bg-gray-300 dark:pattern-bg-gray-800 pattern-opacity-20 duration-150";
     if (pattern === "cross") {
@@ -32,7 +32,7 @@ const Home: NextPage = () => {
     } else {
       return defaultPattern + " pattern-paper pattern-size-6";
     }
-  };
+  }
 
   const menuHandler = () => {
     setTranslate(!translate);
@@ -66,14 +66,10 @@ const Home: NextPage = () => {
         >
           <ChatIcon className="h-12 w-12" />
         </button>
-        <Chat
-          translate={translate}
-          setTranslate={setTranslate}
-          patternStyles={patternStyles}
-        />
+        <Chat translate={translate} setTranslate={setTranslate} />
         <div className="min-h-[calc(100vh-3.6rem)] overflow-hidden bg-gradient-to-b  from-gray-100 to-gray-200 duration-150 dark:from-gray-800 dark:to-gray-900 sm:max-h-[calc(100vh-3.6rem)] ">
           <div className={patternStyles()}></div>
-          <Editor patternStyles={patternStyles} />
+          <Editor />
         </div>
       </div>
     </main>

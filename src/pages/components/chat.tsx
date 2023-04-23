@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useState, useEffect, type FormEvent } from "react";
@@ -6,7 +8,7 @@ import { UserCircleIcon, TrashIcon } from "@heroicons/react/solid";
 import { env } from "../../env.mjs";
 import Typewriter from "typewriter-effect";
 import { Configuration, OpenAIApi } from "openai";
-import { AdjustmentsIcon, AnnotationIcon } from "@heroicons/react/solid";
+import { AdjustmentsIcon } from "@heroicons/react/solid";
 const configuration = new Configuration({
   apiKey: env.NEXT_PUBLIC_OPENAI_API,
 });
@@ -16,10 +18,7 @@ delete configuration.baseOptions.headers["User-Agent"];
 const openai = new OpenAIApi(configuration);
 
 // type Roles = "user" | "assistant" | "system";
-export default function Chat(props: {
-  code: string;
-  patternStyles: () => string;
-}) {
+export default function Chat(props: { code: string }) {
   const { data: session } = useSession();
   const [query, setQuery] = useState("");
   const [message, setMessage] = useState("");
@@ -131,14 +130,12 @@ export default function Chat(props: {
   return (
     <section className="row-span-3 h-full">
       <div className="relative z-10 flex h-full flex-col justify-between overflow-hidden">
-        <div className="relative flex h-full flex-col bg-gray-200 duration-150 dark:bg-gray-600 ">
-          <div className={props.patternStyles()}></div>
-
+        <div className="relative flex h-full flex-col bg-gray-200 bg-opacity-40 duration-150 dark:bg-gray-700 dark:bg-opacity-20">
           <div className="relative z-10 flex items-center border-y border-y-gray-600 bg-gray-100 px-2 py-2 duration-150 dark:bg-gray-800  ">
             <p className="flex select-none items-center text-lg font-semibold text-gray-800 duration-150 dark:text-white">
               <AdjustmentsIcon className="mr-2 h-6 w-6 text-gray-600 dark:text-gray-400" />{" "}
               Use{" "}
-              <span className="dark:gptDarker mx-[0.38rem] text-gpt">
+              <span className="mx-[0.38rem] text-gptDarker dark:text-gpt">
                 {" "}
                 EditorGPT{" "}
               </span>{" "}

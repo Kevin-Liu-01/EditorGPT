@@ -21,7 +21,7 @@ import {
   CheckIcon,
 } from "@heroicons/react/solid";
 
-export default function CodeEditor(props: { patternStyles: () => void }) {
+export default function CodeEditor() {
   const [value, setValue] = useLocalStorage(
     "CODE",
     "console.log('Hello World')"
@@ -185,146 +185,130 @@ export default function CodeEditor(props: { patternStyles: () => void }) {
   };
 
   return (
-    <section className="relative overflow-hidden">
-      <div className=" flex flex-col overflow-hidden  ">
-        {/* <iframe
-        style={{ maxWidth: "100%", border: "none" }}
-        height={375}
-        width={700}
-        src={"https://www.interviewbit.com/embed/snippet/78ee2aed4616367d46ab"}
-        title={"Interviewbit Ide snippet/78ee2aed4616367d46ab"}
-        loading="lazy"
-        allow="clipboard-write"
-        allowFullScreen
-        referrerPolicy="unsafe-url"
-      /> */}
-
-        <div className="grid grid-cols-5 gap-0">
-          <div className="overlay shadow-4xl col-span-3  flex h-full max-h-[calc(100vh-3.6rem)] min-h-[calc(100vh-3.6rem)] w-full flex-col overflow-hidden border-r border-gray-600">
-            <div className="flex w-full flex-row items-center border-b border-gray-600 bg-gray-100 py-1 px-2  text-gray-800 dark:bg-gray-800 dark:text-gray-400">
-              <CodeIcon className="mr-2 h-5 w-5" />
-              <input
-                onChange={(e) => setTitle(e.target.value)}
-                value={title}
-                className="rounded-lg border border-gray-300 bg-white px-2 py-0.5 text-lg font-semibold focus:outline-none focus:ring-1 focus:ring-gpt dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400"
-              ></input>
-              <div className="ml-auto flex flex-row items-center">
-                <div className="mr-3 flex items-center italic text-gray-400 text-sm">
-                  <CheckIcon className="mr-1 h-4 w-4 text-green-400" /> Saved
-                  Locally
-                </div>
-                <div className="relative inline-block text-gray-600">
-                  <select
-                    value={language}
-                    onChange={(event) => setLanguage(event.target.value)}
-                    className="my-1 appearance-none rounded-lg border border-gray-300 bg-white bg-transparent py-0.5 pl-2 pr-8 focus:outline-none focus:ring-1 focus:ring-gpt dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400"
-                  >
-                    <option value="javascript">JavaScript</option>
-                    <option value="python">Python</option>
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 ">
-                    <div className="mb-0.5 h-[1rem] w-[1rem]">
-                      {languageHandler()}
-                    </div>
+    <section className="relative flex flex-col overflow-hidden">
+      <div className="grid grid-cols-5 gap-0">
+        <div className="overlay shadow-4xl col-span-3  flex h-full max-h-[calc(100vh-3.6rem)] min-h-[calc(100vh-3.6rem)] w-full flex-col overflow-hidden border-r border-gray-600">
+          <div className="flex w-full flex-row items-center border-b border-gray-600 bg-gray-100 py-1 px-2  text-gray-800 dark:bg-gray-800 dark:text-gray-400">
+            <CodeIcon className="mr-2 h-5 w-5" />
+            <input
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
+              className="rounded-lg border border-gray-300 bg-white px-2 py-0.5 text-lg font-semibold focus:outline-none focus:ring-1 focus:ring-gpt dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400"
+            ></input>
+            <div className="ml-auto flex flex-row items-center">
+              <div className="mr-3 flex items-center text-sm italic text-gray-400">
+                <CheckIcon className="mr-1 h-4 w-4 text-green-400" /> Saved
+                Locally
+              </div>
+              <div className="relative inline-block text-gray-600">
+                <select
+                  value={language}
+                  onChange={(event) => setLanguage(event.target.value)}
+                  className="my-1 appearance-none rounded-lg border border-gray-300 bg-white bg-transparent py-0.5 pl-2 pr-8 focus:outline-none focus:ring-1 focus:ring-gpt dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400"
+                >
+                  <option value="javascript">JavaScript</option>
+                  <option value="python">Python</option>
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 ">
+                  <div className="mb-0.5 h-[1rem] w-[1rem]">
+                    {languageHandler()}
                   </div>
                 </div>
-
-                <button
-                  onClick={codeHandler}
-                  className="m-1 flex items-center justify-center rounded-lg border border-gray-300 bg-white p-1 text-gray-900 duration-150 hover:bg-gray-100 hover:text-gpt dark:hover:text-gptDark dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900"
-                >
-                  <PlayIcon className="h-5 w-5" />
-                </button>
-                <button
-                  className="my-1 mr-1 flex items-center justify-center rounded-lg border border-gray-300 bg-white p-1 text-gray-900 duration-150 hover:bg-gray-100 hover:text-gpt dark:hover:text-gptDark dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900"
-                  onClick={handleDownload}
-                >
-                  <FolderDownloadIcon className="h-5 w-5" />
-                </button>
               </div>
-            </div>
 
-            <div className="  grid h-full grid-rows-6">
-              <div className="row-span-3">
-                <Editor
-                  className="border-0"
-                  theme={"vs-dark"}
-                  height={`100%`}
-                  width={`100%`}
-                  language={language || "javascript"}
-                  value={value}
-                  defaultValue="// some comment"
-                  onMount={handleEditorDidMount}
-                  onChange={handleEditorChange}
-                  options={{
-                    selectOnLineNumbers: true,
-                    roundedSelection: false,
-                    readOnly: false,
-                    cursorStyle: "line",
-                    scrollbar: {
-                      // Subtle shadows to the left & top. Defaults to true.
-                      useShadows: false,
-                      // Render vertical arrows. Defaults to false.
-                      verticalHasArrows: true,
-                      // Render horizontal arrows. Defaults to false.
-                      horizontalHasArrows: true,
-                      // Render vertical scrollbar.
-                      // Accepted values: 'auto', 'visible', 'hidden'.
-                      // Defaults to 'auto'
-                      vertical: "visible",
-                      // Render horizontal scrollbar.
-                      // Accepted values: 'auto', 'visible', 'hidden'.
-                      // Defaults to 'auto'
-                      horizontal: "visible",
-                      verticalScrollbarSize: 17,
-                      horizontalScrollbarSize: 17,
-                      arrowSize: 17,
-                    },
-                  }}
-                />
-              </div>
-              <Chat code={value} patternStyles={props.patternStyles} />
-            </div>
-          </div>
-          <div className="col-span-2 flex max-h-[calc(100vh-3.6rem)] min-h-[calc(100vh-3.6rem)] w-full  flex-col overflow-hidden bg-gray-300 bg-opacity-40 dark:bg-gray-900 dark:bg-opacity-40">
-            <div className={props.patternStyles}></div>
-
-            <div className="flex w-full flex-row items-center border-b border-gray-600 bg-gray-100 py-1 px-2 text-gray-800 dark:bg-gray-800 dark:text-gray-400">
-              <div className="flex items-center text-lg font-semibold">
-                <TerminalIcon className="mr-2 inline h-6 w-6" /> Console
-              </div>
               <button
-                className="m-1 ml-auto flex items-center justify-center rounded-lg border border-gray-300 bg-white p-1 text-gray-900 duration-150 hover:bg-gray-100 hover:text-red-500 dark:hover:text-red-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900"
-                onClick={() => setLogs([])}
+                onClick={codeHandler}
+                className="m-1 flex items-center justify-center rounded-lg border border-gray-300 bg-white p-1 text-gray-900 duration-150 hover:bg-gray-100 hover:text-gpt dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gptDark"
               >
-                <TrashIcon className="h-5 w-5" />
+                <PlayIcon className="h-5 w-5" />
               </button>
               <button
-                className="my-1 mr-1 flex items-center justify-center rounded-lg border border-gray-300 bg-white p-1 text-gray-900 duration-150 hover:bg-gray-100 hover:text-gpt dark:hover:text-gptDark dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900"
-                onClick={handleConsoleDownload}
+                className="my-1 mr-1 flex items-center justify-center rounded-lg border border-gray-300 bg-white p-1 text-gray-900 duration-150 hover:bg-gray-100 hover:text-gpt dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gptDark"
+                onClick={handleDownload}
               >
                 <FolderDownloadIcon className="h-5 w-5" />
               </button>
             </div>
-            <div className="shadow-4xl scrollbar h-full w-full overflow-x-hidden overflow-y-scroll text-green-300">
-              <div className="relative z-10 m-3 rounded-lg border border-gray-600 bg-gray-800 font-mono">
-                <ul className="overflow-hidden rounded-lg">
-                  {logs[0] ? (
-                    logs.map((log, index) => handleConsole(log, index))
-                  ) : (
-                    <li className="relative z-10 rounded-lg last:bg-gpt odd:bg-gray-300 even:bg-gray-200 dark:odd:bg-gray-800 dark:even:bg-[#2a3241]">
-                      <li className="grid grid-cols-8 px-2 ">
-                        <span className="max-w-4 col-span-1 w-4 pr-1 text-gray-400 dark:text-gray-600">
-                          1
-                        </span>
-                        <span className="col-span-7 text-gray-400 dark:text-gray-600 ">
-                          Run to see an output!
-                        </span>
-                      </li>
+          </div>
+
+          <div className="grid h-full grid-rows-6 bg-gray-400 dark:bg-gray-900">
+            <div className="row-span-3">
+              <Editor
+                className="border-0"
+                theme={"vs-dark"}
+                height={`100%`}
+                width={`100%`}
+                language={language || "javascript"}
+                value={value}
+                defaultValue="// some comment"
+                onMount={handleEditorDidMount}
+                onChange={handleEditorChange}
+                options={{
+                  selectOnLineNumbers: true,
+                  roundedSelection: false,
+                  readOnly: false,
+                  cursorStyle: "line",
+                  scrollbar: {
+                    // Subtle shadows to the left & top. Defaults to true.
+                    useShadows: false,
+                    // Render vertical arrows. Defaults to false.
+                    verticalHasArrows: true,
+                    // Render horizontal arrows. Defaults to false.
+                    horizontalHasArrows: true,
+                    // Render vertical scrollbar.
+                    // Accepted values: 'auto', 'visible', 'hidden'.
+                    // Defaults to 'auto'
+                    vertical: "visible",
+                    // Render horizontal scrollbar.
+                    // Accepted values: 'auto', 'visible', 'hidden'.
+                    // Defaults to 'auto'
+                    horizontal: "visible",
+                    verticalScrollbarSize: 17,
+                    horizontalScrollbarSize: 17,
+                    arrowSize: 17,
+                  },
+                }}
+              />
+            </div>
+            <Chat code={value} />
+          </div>
+        </div>
+        <div className="col-span-2 flex max-h-[calc(100vh-3.6rem)] min-h-[calc(100vh-3.6rem)] w-full  flex-col overflow-hidden bg-gray-300 bg-opacity-10 dark:bg-gray-900 dark:bg-opacity-10">
+          <div className="flex w-full flex-row items-center border-b border-gray-600 bg-gray-100 py-1 px-2 text-gray-800 dark:bg-gray-800 dark:text-gray-400">
+            <div className="flex items-center text-lg font-semibold">
+              <TerminalIcon className="mr-2 inline h-6 w-6" /> Console
+            </div>
+            <button
+              className="m-1 ml-auto flex items-center justify-center rounded-lg border border-gray-300 bg-white p-1 text-gray-900 duration-150 hover:bg-gray-100 hover:text-red-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-red-500"
+              onClick={() => setLogs([])}
+            >
+              <TrashIcon className="h-5 w-5" />
+            </button>
+            <button
+              className="my-1 mr-1 flex items-center justify-center rounded-lg border border-gray-300 bg-white p-1 text-gray-900 duration-150 hover:bg-gray-100 hover:text-gpt dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gptDark"
+              onClick={handleConsoleDownload}
+            >
+              <FolderDownloadIcon className="h-5 w-5" />
+            </button>
+          </div>
+          <div className="shadow-4xl scrollbar h-full w-full overflow-x-hidden overflow-y-scroll text-green-300">
+            <div className="relative z-10 m-3 rounded-lg border border-gray-600 bg-gray-800 font-mono">
+              <ul className="overflow-hidden rounded-lg">
+                {logs[0] ? (
+                  logs.map((log, index) => handleConsole(log, index))
+                ) : (
+                  <li className="relative z-10 rounded-lg last:bg-gpt odd:bg-gray-300 even:bg-gray-200 dark:odd:bg-gray-800 dark:even:bg-[#2a3241]">
+                    <li className="grid grid-cols-8 px-2 ">
+                      <span className="max-w-4 col-span-1 w-4 pr-1 text-gray-400 dark:text-gray-600">
+                        1
+                      </span>
+                      <span className="col-span-7 text-gray-400 dark:text-gray-600 ">
+                        Run to see an output!
+                      </span>
                     </li>
-                  )}
-                </ul>
-              </div>
+                  </li>
+                )}
+              </ul>
             </div>
           </div>
         </div>

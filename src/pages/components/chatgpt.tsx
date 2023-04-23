@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useState, useEffect, type FormEvent } from "react";
@@ -19,7 +21,6 @@ const openai = new OpenAIApi(configuration);
 export default function ChatGPT(props: {
   setTranslate: any;
   translate: boolean;
-  patternStyles: () => string;
 }) {
   const { data: session } = useSession();
   const [query, setQuery] = useState("");
@@ -132,8 +133,7 @@ export default function ChatGPT(props: {
   return (
     <section className={showChat()}>
       <div className="relative z-10 flex h-[100%] flex-col justify-between overflow-hidden rounded-2xl border border-gray-600">
-        <div className="relative h-[100%] bg-gray-200 bg-opacity-90 duration-150 dark:bg-gray-600 dark:bg-opacity-80  ">
-          <div className={props.patternStyles()}></div>
+        <div className="relative h-[100%] bg-gray-200 bg-opacity-90 duration-150 dark:bg-gray-200 dark:bg-opacity-10  ">
           <div className="relative z-10 border-b border-b-gray-600 bg-gray-50 p-4 duration-150 dark:bg-gray-800  ">
             <button
               // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
