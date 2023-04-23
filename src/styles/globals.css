@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.text-shadow {
+  text-shadow: 2px 2px #63b55a;
+}
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 15px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    /* border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem; */
+
+    @apply bg-transparent;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-700;
+
+    /* border-radius: 0.5rem;
+    border: 0px solid;
+    @apply border-2 border-gray-50 dark:border-gray-800; */
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-[#c3c5c5] dark:bg-gray-600;
+  }
+
+  .scrollbar::-webkit-scrollbar-corner {
+    @apply bg-gray-200 dark:bg-gray-600;
+  }
+}
+
+.svgfill {
+  /* filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg)
+    brightness(118%) contrast(119%); */
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
+    contrast(100%);
+}
+
+.svgfill-gray {
+  /* filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg)
+    brightness(118%) contrast(119%); */
+  filter: invert(68%) sepia(15%) saturate(206%) hue-rotate(179deg)
+    brightness(91%) contrast(95%);
+}
+
+.svgfill-gpt {
+  /* filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg)
+    brightness(118%) contrast(119%); */
+  filter: invert(68%) sepia(63%) saturate(589%) hue-rotate(84deg)
+    brightness(92%) contrast(89%);
+}
